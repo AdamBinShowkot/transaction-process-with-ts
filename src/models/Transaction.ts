@@ -5,6 +5,5 @@ export interface Transaction {
     amount: number | null;
     currency: string | null;
     status: string | null;
-    // optional validation flag (added later)
     isValid?: boolean;
 }

@@ -1,7 +1,12 @@
-console.log("Test Type Script With Node.js");
+import { Transaction } from "./models/Transaction";
 
-function add(a: number, b: number): number {
-  return a + b;
-}
-
-console.log("Sum =", add(5, 3));
+let data: Transaction = {
+    transactionId: "tx123",
+    customerId: "cust456",  
+    date: new Date(),
+    amount: 100.50,
+    currency: "USD",
+    status: "completed",
+    isValid: true
+};
+console.log(data);

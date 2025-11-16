@@ -13,6 +13,7 @@ npm run build
 
 # Process a transaction file
 npm start -- -f src/data/clean_transactions.csv
+```markdown
 
 ## 📋 Features
 Multi-format CSV Support: Handles comma, tab, and semicolon delimiters
@@ -25,9 +26,9 @@ Professional Reporting: Detailed processing summaries and financial breakdowns
 
 Error Resilience: Graceful handling of malformed data and edge cases
 
-🛠️ Usage
+## 🛠️ Usage
 Process Transaction Files
-bash
+```bash
 # Process clean transactions
 npm start -- -f src/data/clean_transactions.csv
 

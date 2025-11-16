@@ -1,17 +1,27 @@
-/**
- * Normalize currency code from csv cell
- */
 export function parseCurrency(value: any): string | null {
   if (value == null) return null;
 
-  const str = String(value).trim().toUpperCase();
-  if (!str) return null;
+  let str = String(value).trim().toUpperCase();
 
-  // Optional: validate against known ISO codes
-  const validCurrencies = new Set([
-    "USD","EUR","GBP","JPY","CAD","AUD","CNY","CHF"
-    // Add more if needed
-  ]);
+  const map: Record<string,string> = {
+    USD: "USD",
+    "$": "USD",
+    "DOLLAR": "USD",
+    "US DOLLAR": "USD",
+    "USDOLLAR": "USD",
 
-  return validCurrencies.has(str) ? str : null;
+    EUR: "EUR",
+    "EURO": "EUR",
+
+    GBP: "GBP",
+    "POUND": "GBP",
+
+    CAD: "CAD",
+    "CAD$": "CAD",
+
+    BDT: "BDT",
+    "TAKA": "BDT",
+  };
+
+  return map[str] ?? null;
 }

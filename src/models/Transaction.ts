@@ -24,7 +24,7 @@ export interface ProcessedTransaction{
     customerId: string;    
     date: Date | null;     
     amount: number | null;        
-    currency: string;       
+    currency: string | null;       
     status: string | null;         
     isValid?: boolean;
     validationErrors: string[] | null;

@@ -4,7 +4,6 @@ import { RawTransaction } from "../models/Transaction.js";
 import { parseExcelDate } from "../utils/ParseDate.js";
 import {parseAmount} from "../utils/ParseAmount.js";
 import { parseCurrency } from "../utils/ParseCurrency.js";
-import { HeaderMapper } from '../utils/HeaderMapper.js';
 
 /**
  * Expected sheet columns (first row header):
@@ -12,7 +11,7 @@ import { HeaderMapper } from '../utils/HeaderMapper.js';
  */
 
 export class ReadTransactionsCsvAsync {
-    /** Detects delimiter from a line */
+  /** Detects delimiter from a line */
   private detectDelimiter(line: string): string {
     const delims = ["\t", ";", ","];
 
@@ -25,6 +24,34 @@ export class ReadTransactionsCsvAsync {
 
     return counts[0].count > 0 ? counts[0].d : ","; // default
   }
+
+  /**
+    * Map dynamic CSV headers to standard Transaction keys
+  */
+  private HeaderMapper(headers: string[]): Record<string, number> {
+    const mapIndex: Record<string, number> = {
+      transaction_id: -1,
+      customer_id: -1,
+      date: -1,
+      amount: -1,
+      currency: -1,
+      status: -1,
+    };
+
+    headers.forEach((h, i) => {
+      const header = String(h).toLowerCase().trim();
+
+      if (header.includes("transaction_id")) mapIndex.transaction_id = i;
+      else if (header.includes("customer_id")) mapIndex.customer_id = i;
+      else if (header.includes("date")) mapIndex.date = i;
+      else if (header.includes("amount") || header.includes("value")) mapIndex.amount = i;
+      else if (header.includes("currency") || header.includes("curr")) mapIndex.currency = i;
+      else if (header.includes("status")) mapIndex.status = i;
+    });
+
+    return mapIndex;
+  }
+
 
   async read(filePath: string): Promise<RawTransaction[]> {
     const content = fs.readFileSync(filePath, "utf-8");
@@ -42,7 +69,7 @@ export class ReadTransactionsCsvAsync {
 
     if (!rows || rows.length < 1) return [];
 
-    const mapIndex = HeaderMapper(rows[0]);
+    const mapIndex = this.HeaderMapper(rows[0]);
 
     const out: RawTransaction[] = [];
     for (let i = 1; i < rows.length; i++) {
@@ -58,15 +85,15 @@ export class ReadTransactionsCsvAsync {
             : null,
         date:
           mapIndex.date >= 0 && r[mapIndex.date] != null
-            ? parseExcelDate(r[mapIndex.date])
+            ? r[mapIndex.date]
             : null,
         amount:
           mapIndex.amount >= 0 && r[mapIndex.amount] != null
-            ? parseAmount(r[mapIndex.amount])
+            ? r[mapIndex.amount]
             : null,
         currency:
           mapIndex.currency >= 0 && r[mapIndex.currency] != null
-            ? parseCurrency(r[mapIndex.currency])
+            ? r[mapIndex.currency]
             : null,
         status:
           mapIndex.status >= 0 && r[mapIndex.status] != null

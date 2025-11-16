@@ -3,6 +3,12 @@ import {
     RawTransaction,
     ProcessedTransaction 
 } from "../models/Transaction.js";
+import {
+    CURRENCY_MAP
+} from "../constants/Currencies.js"
+import {
+    STATUS_MAP
+} from "../constants/Status.js"
 
 /**
  * Cleans different formats:
@@ -25,31 +31,17 @@ export class TransactionDataCleaner {
     }
     // parse Currency
     private  parseCurrency(value: any): string | null {
-        if (value == null) return null;
+         if (value == null) return null;
 
-        let str = String(value).trim().toUpperCase();
+        const str = String(value).trim().toUpperCase();
 
-        const map: Record<string,string> = {
-            USD: "USD",
-            "$": "USD",
-            "DOLLAR": "USD",
-            "US DOLLAR": "USD",
-            "USDOLLAR": "USD",
+        // Check map first
+        if (CURRENCY_MAP[str]) return CURRENCY_MAP[str];
 
-            EUR: "EUR",
-            "EURO": "EUR",
+        // Direct match to valid currency list
+        if (Object.values(CURRENCY_MAP).includes(str as any)) return str;
 
-            GBP: "GBP",
-            "POUND": "GBP",
-
-            CAD: "CAD",
-            "CAD$": "CAD",
-
-            BDT: "BDT",
-            "TAKA": "BDT",
-        };
-
-        return map[str] ?? null;
+        return null;
     }
     // Parse Date
     private parseExcelDate(input: any): Date | null {
@@ -131,18 +123,15 @@ export class TransactionDataCleaner {
     }
     // Parsse Status
     private parseStatus(s: any): string | null {
-        const v = this.cleanString(s);
+       const v = this.cleanString(s);
         if (!v) return null;
+
         const lowered = v.toLowerCase();
-        if (lowered === "completed" 
-            || lowered === "complete" 
-            || lowered === "done" 
-            || lowered === "ok"
-        ) return "Completed";
-        if (lowered === "failed" || lowered === "fail" || lowered === "error") return "Failed";
-        if (lowered === "pending") return "Pending";
-        // generic titlecase
-        return v[0].toUpperCase() + v.slice(1).toLowerCase();
+
+        // Look up alias map
+        if (STATUS_MAP[lowered]) return STATUS_MAP[lowered];
+
+        return null; // invalid status
     }
 }
 

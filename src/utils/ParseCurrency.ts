@@ -1,5 +1,5 @@
 /**
- * Normalize currency code from Excel cell
+ * Normalize currency code from csv cell
  */
 export function parseCurrency(value: any): string | null {
   if (value == null) return null;

@@ -1,9 +1,6 @@
 import fs from 'fs';
 import { parse } from "csv-parse/sync";
 import { RawTransaction } from "../models/Transaction.js";
-import { parseExcelDate } from "../utils/ParseDate.js";
-import {parseAmount} from "../utils/ParseAmount.js";
-import { parseCurrency } from "../utils/ParseCurrency.js";
 
 /**
  * Expected sheet columns (first row header):

@@ -1,10 +1,13 @@
 # Transaction Processor
 
-A robust Node.js/TypeScript solution for cleaning, validating, and processing financial transaction data from multiple CSV formats. Built to handle inconsistent data with comprehensive validation and professional reporting.
+A robust **Node.js + TypeScript** solution for cleaning, validating, and
+processing financial transaction data from multiple CSV formats.\
+Designed to handle messy, inconsistent data with intelligent cleaning,
+strong validation, and professional reporting.
 
 ## 🚀 Quick Start
 
-```bash
+``` bash
 # Install dependencies
 npm install
 
@@ -13,138 +16,136 @@ npm run build
 
 # Process a transaction file
 npm start -- -f src/data/clean_transactions.csv
-```markdown
+```
 
-## 📋 Features
-Multi-format CSV Support: Handles comma, tab, and semicolon delimiters
+## ✨ Features
 
-Intelligent Data Cleaning: Normalizes dates, currency amounts, and status values
-
-Comprehensive Validation: Business rule enforcement with duplicate detection
-
-Professional Reporting: Detailed processing summaries and financial breakdowns
-
-Error Resilience: Graceful handling of malformed data and edge cases
+-   **Multi-format CSV Support:** Handles comma, tab, space, and
+    semicolon delimiters\
+-   **Intelligent Data Cleaning:** Normalizes dates, currency amounts,
+    and status values\
+-   **Comprehensive Validation:** Business rule enforcement + duplicate
+    detection\
+-   **Professional Reporting:** Detailed summaries, financial totals,
+    and breakdowns\
+-   **Error Resilience:** Graceful handling of malformed or inconsistent
+    data
 
 ## 🛠️ Usage
-Process Transaction Files
-```bash
-# Process clean transactions
+
+### Process Transaction Files
+
+``` bash
 npm start -- -f src/data/clean_transactions.csv
-
-# Process messy transactions  
 npm start -- -f src/data/messy_transactions.csv
-
-# Process tab-delimited files
 npm start -- -f src/data/tab_delimited.csv
-
-# Process European format files
 npm start -- -f src/data/european_format.csv
+```
 
-Development Commands
-bash
-# Build the project
+### Development Commands
+
+``` bash
 npm run build
-
-# Run in development mode with ts-node
 npm run dev -- -f src/data/clean_transactions.csv
+```
 
-📁 Project Structure
-text
-src/
-├── services/
-│   ├── ReadExcelAsync.ts      # CSV file reader with format detection
-│   ├── DataCleaner.ts         # Data normalization and standardization
-│   ├── DataValidator.ts       # Business rule validation
-│   └── ReportGenerator.ts     # Professional report generation
-├── data/                      # Sample CSV files for testing
-│   ├── clean_transactions.csv
-│   ├── messy_transactions.csv
-│   ├── tab_delimited.csv
-│   └── european_format.csv
-└── index.ts                   # Main application entry point
+## 📁 Project Structure
 
-🔧 Data Processing Pipeline
-The application follows a structured pipeline:
+    src/
+    ├── services/
+    │   ├── ReadExcelAsync.ts
+    │   ├── DataCleaner.ts
+    │   ├── DataValidator.ts
+    │   └── ReportGenerator.ts
+    ├── data/
+    │   ├── clean_transactions.csv
+    │   ├── messy_transactions.csv
+    │   ├── tab_delimited.csv
+    │   └── european_format.csv
+    └── index.ts
 
-Extraction: Reads CSV files with automatic delimiter detection
+## 🔧 Data Processing Pipeline
 
-Cleaning: Normalizes dates, amounts, currencies, and status values
+1.  **Extraction** -- Reads CSV with automatic delimiter detection\
+2.  **Cleaning** -- Normalizes dates, amounts, currencies, status
+    values\
+3.  **Validation** -- Business rules + duplicate detection\
+4.  **Reporting** -- Generates structured summaries
 
-Validation: Applies business rules and detects duplicates
+## 📐 Supported Data Formats
 
-Reporting: Generates comprehensive processing summaries
+### Date Formats
 
-Supported Data Formats
-Dates: YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY, DD-MM-YYYY, YYYYMMDD
+YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY, DD-MM-YYYY, YYYYMMDD
 
-Amounts: $1,200.50, 1.200,50€, 1200.75, 1 200,25
+### Amount Formats
 
-Currencies: USD, EUR, GBP, JPY, CAD, AUD, CNY, CHF
+\$1,200.50, 1.200,50€, 1200.75, 1 200,25
 
-Status Values: completed, success, failed, pending, processing, cancelled
+### Currencies
 
-📊 Sample Output
-text
-================================================================================
-ACME PAYMENTS TRANSACTION PROCESSING REPORT
-================================================================================
-Generated: 2025-01-15 14:30:25
+USD, EUR, GBP, JPY, CAD, AUD, CNY, CHF
 
-PROCESSING SUMMARY:
-Total transactions processed: 1,240
-Valid transactions: 1,215
-Invalid transactions: 20
-Duplicate transactions: 5
-Processing time: 245ms
+### Status Values
 
-FINANCIAL SUMMARY:
-Total amount (USD): 93,442.12
-Total amount (EUR): 15,230.45
+completed, success, failed, pending, processing, cancelled
 
-TRANSACTION STATUS BREAKDOWN:
-Completed transactions: 1,180
-Failed transactions: 35
-Pending transactions: 25
+## 📊 Sample Output
 
-================================================================================
-🏗️ Technical Details
-Language: TypeScript
+    ================================================================================
+    ACME PAYMENTS TRANSACTION PROCESSING REPORT
+    ================================================================================
+    Generated: 2025-01-15 14:30:25
 
-Runtime: Node.js
+    PROCESSING SUMMARY:
+    Total transactions processed: 1,240
+    Valid transactions: 1,215
+    Invalid transactions: 20
+    Duplicate transactions: 5
+    Processing time: 245ms
 
-Build Tool: TypeScript Compiler (tsc)
+    FINANCIAL SUMMARY:
+    Total amount (USD): 93,442.12
+    Total amount (EUR): 15,230.45
 
-Module System: ES Modules
+    TRANSACTION STATUS BREAKDOWN:
+    Completed transactions: 1,180
+    Failed transactions: 35
+    Pending transactions: 25
+    ================================================================================
 
-Architecture: Multi-layer pipeline with separation of concerns
+## 🏗️ Technical Details
 
-🐛 Troubleshooting
-Common Issues
-File not found error:
+-   TypeScript\
+-   Node.js\
+-   TypeScript Compiler (tsc)\
+-   ES Modules\
+-   Multi-layer pipeline architecture
 
-Ensure file paths are relative to project root
+## 🐛 Troubleshooting
 
-Check file exists in src/data/ directory
+### File not found
 
-Verify file extension is .csv
+Ensure correct file path and CSV extension.
 
-Build errors:
+### Build issues
 
-bash
-# Clean install and rebuild
+``` bash
 rm -rf node_modules package-lock.json
 npm install
 npm run build
-TypeScript compilation issues:
+```
 
-bash
-# Check TypeScript configuration
+### TypeScript check
+
+``` bash
 npx tsc --noEmit
-📄 License
-This project is part of a technical assessment for Ternary Solutions Inc.
+```
 
-🤝 Support
-For questions or issues related to this implementation, please refer to the code documentation and inline comments.
+## 📄 License
 
-Built with TypeScript + Node.js • Production-ready data processing • Comprehensive error handling
+This project is part of a technical assessment.
+
+## 🤝 Support
+
+Refer to inline comments and documentation.

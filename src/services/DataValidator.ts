@@ -14,9 +14,8 @@ export class TransactionDataValidator {
 
         for (const row of list) {
             const errors = this.validateRow(row);
-
             if (duplicateIds.has(row.transactionId)) {
-                errors.push("Duplicate transaction_id");
+                errors.push("Duplicate transactionId");
             }
 
             if (errors.length === 0) {
@@ -60,7 +59,7 @@ export class TransactionDataValidator {
         // Status
         if (!row.status) {
             errors.push("Missing status");
-        } else if (!VALID_STATUSES.includes(row.status.toLowerCase() as any)) {
+        } else if (!VALID_STATUSES.includes(row.status as any)) {
             errors.push(`Invalid status: ${row.status}`);
         }
 
